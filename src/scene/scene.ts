@@ -7,15 +7,15 @@ import {
   SphereGeometry,
   MeshToonMaterial,
   PlaneGeometry,
-  Color,
+  //Color,
   CylinderGeometry,
   BoxGeometry,
-  OctahedronGeometry,
+  //OctahedronGeometry,
   ConeGeometry,
 } from "three"
-import { renderer, updateRenderer } from "/src/core/renderer"
+import { updateRenderer } from "../core/renderer"
 
-import { gui } from "/src/core/gui"
+import { gui } from "../core/gui"
 
 export const scene = new Scene()
 
@@ -39,9 +39,9 @@ directionalLight.position.set(0.25, 2, 2.25)
 
 scene.add(directionalLight)
 
-const PARAMS = {
-  color: "#5EDCAE",
-}
+//const PARAMS = {
+  //color: "#5EDCAE",
+//}
 //ESFERAS//
 const sphere = new Mesh(
   new SphereGeometry(0.75, 32, 32),
@@ -373,9 +373,10 @@ sphereCtrls.addInput(cone.position, "z", {
   max: 10,
   step: 0.1,
 })
-sphereCtrls.addInput(PARAMS, "color").on("change", (e) => {
-  sphere.material.color = new Color(e.value)
-})
+
+//sphereCtrls.addInput(PARAMS, "color").on("change", (e) => {
+  //sphere.material.color = new Color(e.value)
+//})
 
 sphereCtrls.addInput(sphere.material, "wireframe")
 

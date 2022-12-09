@@ -1,21 +1,24 @@
-import {
+import THREE, {
   Scene,
   AxesHelper,
   AmbientLight,
-  DirectionalLight,
   Mesh,
   SphereGeometry,
-  MeshToonMaterial,
   PlaneGeometry,
   //Color,
   CylinderGeometry,
   BoxGeometry,
+  PointLight,
   //OctahedronGeometry,
+  MeshLambertMaterial,
+  MeshBasicMaterial,
   ConeGeometry,
+
 } from "three"
 import { updateRenderer } from "../core/renderer"
 
 import { gui } from "../core/gui"
+import camera from "../core/camera"
 
 export const scene = new Scene()
 
@@ -30,14 +33,11 @@ gui.addInput(axesHelper, "visible", {
 const ambientLight = new AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const directionalLight = new DirectionalLight("#ffffff", 2)
-directionalLight.castShadow = true
-directionalLight.shadow.mapSize.set(1024, 1024)
-directionalLight.shadow.camera.far = 500
-directionalLight.shadow.normalBias = 0.5
-directionalLight.position.set(0.25, 2, 2.25)
-
-scene.add(directionalLight)
+const light = new PointLight( 0xff1111, 100, 100 );
+light.position.set(0,20,0);
+light.intensity = 500;
+light.castShadow = true;
+scene.add( light );
 
 //const PARAMS = {
   //color: "#5EDCAE",
@@ -45,7 +45,7 @@ scene.add(directionalLight)
 //ESFERAS//
 const sphere = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -56,7 +56,7 @@ sphere.castShadow = true
 
 const sphere2 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -67,7 +67,7 @@ sphere2.castShadow = true
 
 const sphere3 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -78,7 +78,7 @@ sphere3.castShadow = true
 
 const sphere4 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -89,7 +89,7 @@ sphere4.castShadow = true
 
 const sphere5 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -100,7 +100,7 @@ sphere5.castShadow = true
 
 const sphere6 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -111,7 +111,7 @@ sphere6.castShadow = true
 
 const sphere7 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -122,7 +122,7 @@ sphere7.castShadow = true
 
 const sphere8 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -133,7 +133,7 @@ sphere8.castShadow = true
 
 const sphere9 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -144,7 +144,7 @@ sphere9.castShadow = true
 
 const sphere10 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -155,7 +155,7 @@ sphere10.castShadow = true
 
 const sphere11 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -166,7 +166,7 @@ sphere11.castShadow = true
 
 const sphere12 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -177,7 +177,7 @@ sphere12.castShadow = true
 
 const sphere13 = new Mesh(
   new SphereGeometry(0.75, 32, 32),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#2d7121",
     wireframe: false,
   })
@@ -191,11 +191,15 @@ const sphereCtrls = gui.addFolder({
   title: "Sphere",
 })
 
+//LUZ//
+const LightCtrls = gui.addFolder({
+  title: "Light Position",
+})
 
 //CILINDRO//
 const cylinder = new Mesh(
   new CylinderGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#7B3F00",
     wireframe: false,
   })
@@ -209,7 +213,7 @@ cylinder.castShadow=true
 //CUBOS//
 const cube = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshBasicMaterial({
     color: "#dcdf00",
     wireframe: false,
   })
@@ -220,7 +224,7 @@ cube.castShadow=true
 
 const cube2 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#ff0000",
     wireframe: false,
   })
@@ -231,7 +235,7 @@ cube2.castShadow=true
 
 const cube3 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#ff0000",
     wireframe: false,
   })
@@ -242,7 +246,7 @@ cube3.castShadow=true
 
 const cube4 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#ff0000",
     wireframe: false,
   })
@@ -253,7 +257,7 @@ cube4.castShadow=true
 
 const cube5 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#ff0000",
     wireframe: false,
   })
@@ -264,7 +268,7 @@ cube5.castShadow=true
 
 const cube6 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#7B3F00",
     wireframe: false,
   })
@@ -275,7 +279,7 @@ cube6.castShadow=true
 
 const cube7 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#7B3F00",
     wireframe: false,
   })
@@ -286,7 +290,7 @@ cube7.castShadow=true
 
 const cube8 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#00ced1",
     wireframe: false,
   })
@@ -297,7 +301,7 @@ cube8.castShadow=true
 
 const cube9 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#00ced1",
     wireframe: false,
   })
@@ -308,7 +312,7 @@ cube9.castShadow=true
 
 const cube10 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#00ced1",
     wireframe: false,
   })
@@ -319,7 +323,7 @@ cube10.castShadow=true
 
 const cube11 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#00ced1",
     wireframe: false,
   })
@@ -330,7 +334,7 @@ cube11.castShadow=true
 
 const cube12 = new Mesh(
   new BoxGeometry(1,1,1),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#ff0000",
     wireframe: false,
   })
@@ -343,7 +347,7 @@ cube12.castShadow=true
 //CONE//
 const cone  = new Mesh(
   new ConeGeometry(3,4,8),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#00ced1",
     wireframe: false,
   })
@@ -372,6 +376,28 @@ sphereCtrls.addInput(cone.position, "z", {
   min: -10,
   max: 10,
   step: 0.1,
+})
+
+LightCtrls.addInput(light.position, "x", {
+  label: "pos x",
+  min: -100,
+  max: 100,
+  step: 0.1,
+})
+LightCtrls.addInput(light.position, "y", {
+  label: "pos y",
+  min: -100,
+  max: 100,
+  step: 0.1,
+})
+LightCtrls.addInput(light.position, "z", {
+  label: "pos z",
+  min: -100,
+  max: 100,
+  step: 0.1,
+})
+LightCtrls.addInput(light, "intensity").on("change", (e) => {
+  light.intensity =  e.value;
 })
 
 //sphereCtrls.addInput(PARAMS, "color").on("change", (e) => {
@@ -411,7 +437,7 @@ scene.add(cone)
 
 const plane = new Mesh(
   new PlaneGeometry(10, 10, 10, 10),
-  new MeshToonMaterial({
+  new MeshLambertMaterial({
     color: "#006400",
   })
 )

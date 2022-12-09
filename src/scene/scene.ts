@@ -14,11 +14,10 @@ import THREE, {
   MeshBasicMaterial,
   ConeGeometry,
 
-} from "THREE"
+} from "three"
 import { updateRenderer } from "../core/renderer"
 
 import { gui } from "../core/gui"
-
 
 export const scene = new Scene()
 

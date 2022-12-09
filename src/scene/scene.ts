@@ -1,4 +1,4 @@
-import THREE, {
+import {
   Scene,
   AxesHelper,
   AmbientLight,
